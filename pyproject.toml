@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "captnseq-toolkit"
+dynamic = ["version"]
+description = "Analysis tools for CAPTn-seq transposon-insertion sequencing data (used by nf-core/captnseq)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Simon Jeanneau" }]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+captnseq-toolkit = "captnseq_toolkit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/simonjeanneau/captnseq-toolkit"
+Pipeline = "https://github.com/nf-core/proposals/issues/173"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
