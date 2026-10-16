@@ -1,2 +1,0 @@
-[console_scripts]
-captnseq-toolkit = captnseq_toolkit.cli:main

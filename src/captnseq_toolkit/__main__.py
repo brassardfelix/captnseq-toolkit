@@ -1,3 +1,5 @@
+import sys
+
 from captnseq_toolkit.cli import main
 
-main()
+sys.exit(main())

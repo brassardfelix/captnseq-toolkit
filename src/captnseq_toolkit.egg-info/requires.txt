@@ -1,7 +1,0 @@
-numpy
-pandas
-scipy
-matplotlib
-
-[test]
-pytest

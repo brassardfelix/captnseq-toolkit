@@ -92,15 +92,17 @@ def compute_gene_insertions(features_path, sample_path, length_pc_start, length_
     )
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(prog="captnseq-toolkit sites2genes", description=__doc__)
+def add_arguments(parser):
+    """Register this subcommand's options on *parser*."""
     parser.add_argument("--features", required=True)
     parser.add_argument("--sample", required=True)
     parser.add_argument("--length-pc-start", type=float, required=True)
     parser.add_argument("--length-pc-stop", type=float, required=True)
     parser.add_argument("--output", required=True)
-    args = parser.parse_args(argv)
 
+
+def run_args(args):
+    """Run the subcommand from an ``argparse.Namespace``."""
     compute_gene_insertions(
         features_path=args.features,
         sample_path=args.sample,
@@ -108,6 +110,16 @@ def main(argv=None):
         length_pc_stop=args.length_pc_stop,
         output_path=args.output,
     )
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        prog="captnseq-toolkit sites2genes",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    add_arguments(parser)
+    run_args(parser.parse_args(argv))
 
 
 if __name__ == "__main__":

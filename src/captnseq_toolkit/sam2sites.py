@@ -304,8 +304,8 @@ def build_unstranded_unnormalized_bedgraph_file(interval_df: pd.DataFrame, filen
     )
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(prog="captnseq-toolkit sam2sites", description=__doc__)
+def add_arguments(parser):
+    """Register this subcommand's options on *parser*."""
     parser.add_argument("--sam", required=True)
     parser.add_argument("--norm-value", type=int, required=True)
     parser.add_argument("--read-len-threshold", type=int, required=True)
@@ -317,8 +317,10 @@ def main(argv=None):
     parser.add_argument("--unstranded-output", required=True)
     parser.add_argument("--unnormalized-output", required=True)
     parser.add_argument("--unstranded-unnormalized-output", required=True)
-    args = parser.parse_args(argv)
 
+
+def run_args(args):
+    """Run the subcommand from an ``argparse.Namespace``."""
     pos_offset = (args.pos_offset_fwd, args.pos_offset_rev)
     sam_df = parse_sam_file(args.sam, args.read_len_threshold, pos_offset)
     filtered_reads = filter_reads_by_site_support(sam_df, args.score_threshold)
@@ -329,6 +331,16 @@ def main(argv=None):
     build_unstranded_bedgraph_file(interval_df, args.unstranded_output)
     build_stranded_unnormalized_bedgraph_file(interval_df, args.unnormalized_output)
     build_unstranded_unnormalized_bedgraph_file(interval_df, args.unstranded_unnormalized_output)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        prog="captnseq-toolkit sam2sites",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    add_arguments(parser)
+    run_args(parser.parse_args(argv))
 
 
 if __name__ == "__main__":

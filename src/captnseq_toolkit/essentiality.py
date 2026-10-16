@@ -175,15 +175,17 @@ def run(input_file, output_all, output_essen, output_ambig, output_nonessen):
     abort_and_output(score_E, lower, upper)
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(prog="captnseq-toolkit essentiality", description=__doc__)
+def add_arguments(parser):
+    """Register this subcommand's options on *parser*."""
     parser.add_argument("--input", required=True, help="sites2genes output (genes_insertions.tsv)")
     parser.add_argument("--output-all", required=True)
     parser.add_argument("--output-essen", required=True)
     parser.add_argument("--output-ambig", required=True)
     parser.add_argument("--output-nonessen", required=True)
-    args = parser.parse_args(argv)
 
+
+def run_args(args):
+    """Run the subcommand from an ``argparse.Namespace``."""
     run(
         input_file=args.input,
         output_all=args.output_all,
@@ -191,6 +193,16 @@ def main(argv=None):
         output_ambig=args.output_ambig,
         output_nonessen=args.output_nonessen,
     )
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        prog="captnseq-toolkit essentiality",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    add_arguments(parser)
+    run_args(parser.parse_args(argv))
 
 
 if __name__ == "__main__":
